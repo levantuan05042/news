@@ -9,4 +9,5 @@ public class UsersResponse {
     private String password;
     private String fullname;
     private Integer role;
+    private String image;
 }

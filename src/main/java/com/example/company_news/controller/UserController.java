@@ -14,9 +14,11 @@ import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/users")
+@CrossOrigin(origins = "*")
 @RequiredArgsConstructor
 public class UserController {
 
@@ -34,10 +36,15 @@ public class UserController {
         return ResponseEntity.ok().body("Đăng ký thành công. Token là: " + token);
     }
 
+
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody @Valid LoginRequest request) {
         String token = userService.login(request);
-        return ResponseEntity.ok().body("Đăng nhập thành công. Token là: " + token);
+
+        return ResponseEntity.ok().body(Map.of(
+                "message", "Đăng nhập thành công",
+                "token", token
+        ));
     }
 
     @PostMapping("/detail/{id}")

@@ -8,7 +8,8 @@ import java.util.List;
 
 @Entity
 @Table(name = "category")
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Category {
@@ -17,6 +18,10 @@ public class Category {
     private String id;
 
     private String name;
+
+    @ManyToOne
+    @JoinColumn(name = "tool_group_id")
+    private ToolGroup toolGroup;
 
     @OneToMany(mappedBy = "category")
     @JsonIgnore

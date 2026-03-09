@@ -4,8 +4,9 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Table(name = "tool")
-@Data
+@Table(name = "tools")
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Tool {
