@@ -21,9 +21,7 @@ public class QuestionController {
 
     // Lấy tất cả câu hỏi
     @GetMapping
-    public List<QuestionResponse> getQuestions(
-            @RequestParam(defaultValue = "newest") String sort
-    ){
+    public List<QuestionResponse> getQuestions(@RequestParam(defaultValue = "newest") String sort){
         return questionService.getQuestions(sort);
     }
 
@@ -46,8 +44,12 @@ public class QuestionController {
 
     @PostMapping("/search")
     public List<QuestionResponse> search(@RequestBody QuestionRequest request){
-//        return toolService.search(request);
         return questionRepository.search(request);
+    }
+
+    @GetMapping("/user/{userId}")
+    public List<QuestionResponse> getByUser(@PathVariable String userId){
+        return questionService.getQuestionByUser(userId);
     }
 
 }

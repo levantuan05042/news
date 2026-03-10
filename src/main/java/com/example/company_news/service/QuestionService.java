@@ -103,4 +103,8 @@ public class QuestionService extends BaseService {
 
     }
 
+    public List<QuestionResponse> getQuestionByUser(String userId){
+        return questionRepository.findByUserId(userId);
+    }
+
 }
