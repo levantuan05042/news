@@ -9,17 +9,22 @@ import com.example.company_news.model.dto.UsersRequest;
 import com.example.company_news.model.dto.UsersResponse;
 import com.example.company_news.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-public class userService extends BaseService{
+public class userService extends BaseService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
@@ -42,14 +47,12 @@ public class userService extends BaseService{
         User user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow(() -> new ResponseStatusException(
                         HttpStatus.UNAUTHORIZED, "Email không đúng"));
-
         if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
             throw new ResponseStatusException(
                     HttpStatus.UNAUTHORIZED, "Password sai");
         }
         return jwtService.generateToken(user);
     }
-
 
     public UsersResponse detail(String id) throws NotFoundException {
         User user = userRepository.findById(id)
@@ -58,11 +61,25 @@ public class userService extends BaseService{
         return dto(user, UsersResponse.class);
     }
 
-    public UsersResponse update(String id, UsersRequest request) throws NotFoundException {
+    public UsersResponse update(String id, UsersRequest request, MultipartFile file) throws Exception {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Không tìm thấy"));
-        user.setFullname(request.getFullName());
-        user.setPassword(passwordEncoder.encode(request.getPassword()));
+        if (request.getCurrentPassword() == null || !passwordEncoder.matches(request.getCurrentPassword(), user.getPassword())) {
+            throw new RuntimeException("Mật khẩu hiện tại không đúng");
+        }
+        if (file != null && !file.isEmpty()) {
+            String extension = StringUtils.getFilenameExtension(file.getOriginalFilename());
+            String fileName = "avatar_" + id + "." + extension;
+
+            Path path = Paths.get("D:/KenhVanHoaSo/uploads/" + fileName);
+            Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+            user.setImage(fileName);
+        }
+        if (request.getFullName() != null) user.setFullname(request.getFullName());
+        if (request.getPassword() != null && !request.getPassword().isEmpty()) {
+            user.setPassword(passwordEncoder.encode(request.getPassword()));
+        }
+
         userRepository.save(user);
         return dto(user, UsersResponse.class);
     }

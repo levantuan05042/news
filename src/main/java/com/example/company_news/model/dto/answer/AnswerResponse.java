@@ -9,20 +9,11 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AnswerResponse {
-
     private String id;
-
     private String content;
-
     private LocalDateTime createdAt;
-
     private String questionId;
-
     private String userId;
-
     private String fullname;
-
     private String image;
-
-
 }

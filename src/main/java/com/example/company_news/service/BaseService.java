@@ -1,13 +1,9 @@
 package com.example.company_news.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 
-@Service
-
-
-public class BaseService {
+public abstract class BaseService {
     @Autowired
     private ModelMapper modelMapper;
 

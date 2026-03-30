@@ -9,7 +9,6 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface AnswerRepository extends JpaRepository<Answer, String> {
-
     @Query("""
                  SELECT new com.example.company_news.model.dto.answer.AnswerResponse(
                      a.id,
@@ -27,5 +26,4 @@ public interface AnswerRepository extends JpaRepository<Answer, String> {
     List<AnswerResponse> findByQuestionIdOrderByCreatedAtDesc(
             @Param("questionId") String questionId
     );
-
 }

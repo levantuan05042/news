@@ -19,9 +19,7 @@ public class User {
     private String password;
     private String fullname;
     private Integer role;
-
     private String image;
-
     @JsonIgnore
     @OneToMany(mappedBy = "user")
     private List<Question> questions;

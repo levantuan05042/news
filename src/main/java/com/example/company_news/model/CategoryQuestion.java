@@ -4,6 +4,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -15,9 +16,11 @@ import java.util.List;
 public class CategoryQuestion {
     @Id
     private String id;
-
     private String name;
-
     @OneToMany(mappedBy = "category")
     private List<Question> questions;
+    private LocalDateTime createdAt;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 }

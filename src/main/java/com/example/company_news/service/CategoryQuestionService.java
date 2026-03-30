@@ -11,11 +11,9 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class CategoryQuestionService extends BaseService {
-
-    protected final CategoryQuestionRepository categoryQuestionRepository;
+    private final CategoryQuestionRepository categoryQuestionRepository;
 
     public List<CategoryQuestionResponse> getAll() {
-
         return categoryQuestionRepository.findAll()
                 .stream()
                 .map(categoryquestion -> dto(categoryquestion, CategoryQuestionResponse.class))

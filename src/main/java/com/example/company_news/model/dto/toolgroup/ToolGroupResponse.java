@@ -7,7 +7,6 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ToolGroupResponse {
-
     private String id;
     private String name;
 

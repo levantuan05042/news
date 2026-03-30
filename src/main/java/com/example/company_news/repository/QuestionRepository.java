@@ -52,7 +52,6 @@ public interface QuestionRepository extends JpaRepository<Question, String> {
             """)
     List<QuestionResponse> findOldest();
 
-
     // Hot (nhiều câu trả lời nhất)
     @Query("""
                 SELECT new com.example.company_news.model.dto.question.QuestionResponse(
@@ -73,7 +72,6 @@ public interface QuestionRepository extends JpaRepository<Question, String> {
                 ORDER BY COUNT(a.id) DESC
             """)
     List<QuestionResponse> findHot();
-
 
     @Query("""
                 SELECT new com.example.company_news.model.dto.question.QuestionResponse(

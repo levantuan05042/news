@@ -1,7 +1,6 @@
 package com.example.company_news.controller;
 
 import com.example.company_news.model.dto.categoryquestion.CategoryQuestionResponse;
-import com.example.company_news.model.dto.toolgroup.ToolGroupResponse;
 import com.example.company_news.service.CategoryQuestionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -17,9 +16,8 @@ import java.util.List;
 @CrossOrigin("*")
 @RequiredArgsConstructor
 public class CategoryQuestionController {
-
-
     private final CategoryQuestionService categoryQuestionService;
+
     @GetMapping
     public List<CategoryQuestionResponse> getAll() {
         return categoryQuestionService.getAll();

@@ -31,11 +31,17 @@ public class JwtService {
                 .claim("id", user.getId())
                 .claim("role", user.getRole())
                 .claim("fullName", user.getFullname())
-                .claim("password", user.getPassword())
                 .claim("image", user.getImage())
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + 86400000))
                 .signWith(secretKey)
                 .compact();
+    }
+    public String getUserIdFromToken(String token) {
+        return Jwts.parser()
+                .setSigningKey(secretKey)
+                .parseClaimsJws(token)
+                .getBody()
+                .get("id", String.class); // lấy claim "id" bạn đã set lúc tạo token
     }
 }

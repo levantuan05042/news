@@ -7,7 +7,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class CategoryRequest extends PageSearchRequest {
-
     private String name;
     private String toolGroup;
 
